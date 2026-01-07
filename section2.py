@@ -100,27 +100,30 @@ if __name__ == "__main__":
         # Offset label slightly
         ax.text(x + 0.1, y + 0.1, label)
 
-    # Plot Extortion Strategy (Chi = 3, Baseline P)
-    # Equation: sX - P = chi * (sY - P)
-    # Rearranged: sX = chi*(sY - P) + P
+    # Exact Extortion Strategy (Chi = 3, Baseline P)
     chi_ext = 3.0
-    y_vals = np.linspace(S, R, 100)  # Player Y score range
-    x_vals_ext = chi_ext * (y_vals - P) + P
+    # Calculate intersection of line and boundary
+    y_ext_limit = 10.5 / 5.5  # Exact intersection y ~ 1.909
 
-    # Filter to keep inside plot limits
-    lim_ext = (x_vals_ext <= T) & (x_vals_ext >= S)
-    ax.plot(x_vals_ext[lim_ext], y_vals[lim_ext], 'r-',
+    y_vals_ext = np.linspace(P, y_ext_limit, 100)
+    x_vals_ext = chi_ext * (y_vals_ext - P) + P
+
+    ax.plot(x_vals_ext, y_vals_ext, 'r-', linewidth=2,
             label=f'Extortion ZD ($\\chi={chi_ext}$, Base $P$)')
 
-    # Plot Generous Strategy (Chi = 2, Baseline R)
-    # Equation: sX - R = chi * (sY - R)
-    # Rearranged: sX = chi*(sY - R) + R
+    # Exact Generous Strategy (Chi = 2, Baseline R)
     chi_gen = 2.0
-    x_vals_gen = chi_gen * (y_vals - R) + R
+    # Calculate the intersection of line and boundary
+    y_gen_limit = 17 / 9  # Exact intersection y ~ 1.888
+    y_vals_gen = np.linspace(y_gen_limit, R, 100)
+    x_vals_gen = chi_gen * (y_vals_gen - R) + R
+
+    ax.plot(x_vals_gen, y_vals_gen, 'g-', linewidth=2,
+            label=f'Generous ZD ($\\chi={chi_gen}$, Base $R$)')
 
     # Filter
     lim_gen = (x_vals_gen <= T) & (x_vals_gen >= S)
-    ax.plot(x_vals_gen[lim_gen], y_vals[lim_gen], 'g-',
+    ax.plot(x_vals_gen[lim_gen], y_vals_gen[lim_gen], 'g-',
             label=f'Generous ZD ($\\chi={chi_gen}$, Base $R$)')
 
     # Plot Tit-for-Tat
