@@ -121,11 +121,6 @@ if __name__ == "__main__":
     ax.plot(x_vals_gen, y_vals_gen, 'g-', linewidth=2,
             label=f'Generous ZD ($\\chi={chi_gen}$, Base $R$)')
 
-    # Filter
-    lim_gen = (x_vals_gen <= T) & (x_vals_gen >= S)
-    ax.plot(x_vals_gen[lim_gen], y_vals_gen[lim_gen], 'g-',
-            label=f'Generous ZD ($\\chi={chi_gen}$, Base $R$)')
-
     # Plot Tit-for-Tat
     ax.plot([P, R], [P, R], 'b--', alpha=0.6, label='Tit-for-Tat')
 
